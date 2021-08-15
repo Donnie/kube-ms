@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -11,16 +11,16 @@ func main() {
 	r := gin.Default()
 	r.GET("/multiply", handleMul)
 	r.GET("/health", func(c *gin.Context) {
-		c.JSON(200, nil)
+		host, _ := os.Hostname()
+		c.JSON(200, host)
 	})
 	r.Run()
 }
 
 func handleMul(c *gin.Context) {
 	if multiply, ok := c.GetQueryArray("multiply"); ok {
-		fmt.Println(Multiply(multiply))
+		c.JSON(200, Multiply(multiply))
 	}
-	c.JSON(200, c.Request.URL.Query())
 }
 
 //Multiply numbers

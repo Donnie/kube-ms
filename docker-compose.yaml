@@ -10,6 +10,27 @@ networks:
 
 services:
 
+  gateway:
+    image: traefik:latest
+    command:
+    - --accesslog=true
+    - --api.insecure=true
+    - --api.dashboard=true
+    - --providers.docker.endpoint=unix:///var/run/docker.sock
+    - --providers.docker.defaultRule=PathPrefix(`/{{ .Name }}`)
+    - --providers.docker.exposedByDefault=true
+    - --entrypoints.web.address=:80
+    - --entrypoints.web.http.middlewares=strip@docker
+    networks:
+    - default
+    ports:
+    - 8000:8080/tcp
+    - 8085:80/tcp
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+    - traefik.http.middlewares.strip.stripprefixregex.regex=/[a-z0-9-]+
+
   api:
     image: donnieashok/4ops
     build:
@@ -18,7 +39,9 @@ services:
     networks:
     - default
     ports:
-    - 8080:8080/tcp
+    - 8080/tcp
+    labels:
+      traefik.enable: "true"
   
   addition:
     image: donnieashok/addition

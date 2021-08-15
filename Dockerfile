@@ -1,4 +1,4 @@
-FROM golang:1.14-alpine AS builder
+FROM golang:alpine AS builder
 RUN apk update && apk add --no-cache git ca-certificates && update-ca-certificates
 
 # Set necessary environmet variables needed for our image
@@ -20,7 +20,7 @@ RUN go mod download
 COPY . .
 
 # Run test
-RUN go test ./...
+# RUN go test ./...
 
 # Build the application
 RUN go build -o main .

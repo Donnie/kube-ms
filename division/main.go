@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -11,16 +11,16 @@ func main() {
 	r := gin.Default()
 	r.GET("/divide", handleDiv)
 	r.GET("/health", func(c *gin.Context) {
-		c.JSON(200, nil)
+		host, _ := os.Hostname()
+		c.JSON(200, host)
 	})
 	r.Run()
 }
 
 func handleDiv(c *gin.Context) {
 	if divide, ok := c.GetQueryArray("divide"); ok {
-		fmt.Println(Divide(divide))
+		c.JSON(200, Divide(divide))
 	}
-	c.JSON(200, c.Request.URL.Query())
 }
 
 //Divide numbers
