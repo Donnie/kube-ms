@@ -1,0 +1,61 @@
+#!/usr/bin/env -S docker-compose -p kube-ms -f
+
+version: "3.8"
+
+networks:
+  default:
+    internal: false
+    external: false
+    attachable: true
+
+services:
+
+  api:
+    image: donnieashok/4ops
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+    - default
+    ports:
+    - 8080:8080/tcp
+  
+  addition:
+    image: donnieashok/addition
+    build:
+      context: addition/
+      dockerfile: mod.Dockerfile
+    networks:
+    - default
+    ports:
+    - 8081:8080/tcp
+
+  subtraction:
+    image: donnieashok/subtraction
+    build:
+      context: subtraction/
+      dockerfile: mod.Dockerfile
+    networks:
+    - default
+    ports:
+    - 8082:8080/tcp
+
+  multiplication:
+    image: donnieashok/multiplication
+    build:
+      context: multiplication/
+      dockerfile: mod.Dockerfile
+    networks:
+    - default
+    ports:
+    - 8083:8080/tcp
+
+  division:
+    image: donnieashok/division
+    build:
+      context: division/
+      dockerfile: mod.Dockerfile
+    networks:
+    - default
+    ports:
+    - 8084:8080/tcp
