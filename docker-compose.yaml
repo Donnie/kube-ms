@@ -24,7 +24,7 @@ services:
     image: donnieashok/addition
     build:
       context: addition/
-      dockerfile: mod.Dockerfile
+      dockerfile: ../Dockerfile
     networks:
     - default
     ports:
@@ -34,7 +34,7 @@ services:
     image: donnieashok/subtraction
     build:
       context: subtraction/
-      dockerfile: mod.Dockerfile
+      dockerfile: ../Dockerfile
     networks:
     - default
     ports:
@@ -44,7 +44,7 @@ services:
     image: donnieashok/multiplication
     build:
       context: multiplication/
-      dockerfile: mod.Dockerfile
+      dockerfile: ../Dockerfile
     networks:
     - default
     ports:
@@ -54,7 +54,7 @@ services:
     image: donnieashok/division
     build:
       context: division/
-      dockerfile: mod.Dockerfile
+      dockerfile: ../Dockerfile
     networks:
     - default
     ports:

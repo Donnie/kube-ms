@@ -1,4 +1,4 @@
-package multiplication
+package main
 
 import (
 	"fmt"
@@ -7,14 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func serve() (err error) {
+func main() {
 	r := gin.Default()
 	r.GET("/multiply", handleMul)
 	r.GET("/health", func(c *gin.Context) {
 		c.JSON(200, nil)
 	})
 	r.Run()
-	return
 }
 
 func handleMul(c *gin.Context) {

@@ -1,11 +1,3 @@
-github.com/Donnie/kube-ms/addition v0.0.0-20210815180949-fda4c3301599 h1:Q7oELfOYVzACrDRRq0z3C73YDNqvIl5gNyxQDtGQjUo=
-github.com/Donnie/kube-ms/addition v0.0.0-20210815180949-fda4c3301599/go.mod h1:DTdnyKIFs2PFzidM+MeGx94WgQLE+o0gtD0Ko8LjVtc=
-github.com/Donnie/kube-ms/division v0.0.0-20210815180949-fda4c3301599 h1:oM2xw7HxMVvA+vmiS7lL9j0iGfRQKzbP3agfyMi/ayY=
-github.com/Donnie/kube-ms/division v0.0.0-20210815180949-fda4c3301599/go.mod h1:XaR3lLPMQI8qUh9Uxwm1dP5yarSgQWRBdeAo+Dzk5bA=
-github.com/Donnie/kube-ms/multiplication v0.0.0-20210815180949-fda4c3301599 h1:b63DI16FEyUyJA1cULwyCmLgkdtytnpucrLLaaU2GJ8=
-github.com/Donnie/kube-ms/multiplication v0.0.0-20210815180949-fda4c3301599/go.mod h1:3yKUiW+8kOdcWS4iHLSdY4IcSw73Rv7g615MUzAOyQY=
-github.com/Donnie/kube-ms/subtraction v0.0.0-20210815180949-fda4c3301599 h1:KU66DewgOfkgbKwSudD/+dW7fcnU2U0CRgFPshHiLBk=
-github.com/Donnie/kube-ms/subtraction v0.0.0-20210815180949-fda4c3301599/go.mod h1:6J8bq/hqb6CD4Hro6lDsbm9ml0/diEgK2DDbAPGI24g=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

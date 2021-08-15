@@ -1,4 +1,4 @@
-package addition
+package main
 
 import (
 	"fmt"
@@ -7,14 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func serve() (err error) {
+func main() {
 	r := gin.Default()
 	r.GET("/add", handleAdd)
 	r.GET("/health", func(c *gin.Context) {
 		c.JSON(200, nil)
 	})
 	r.Run()
-	return
 }
 
 func handleAdd(c *gin.Context) {

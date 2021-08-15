@@ -1,4 +1,4 @@
-FROM golang:alpine AS builder
+FROM golang:1.14-alpine AS builder
 RUN apk update && apk add --no-cache git ca-certificates && update-ca-certificates
 
 # Set necessary environmet variables needed for our image
@@ -25,19 +25,13 @@ RUN go test ./...
 # Build the application
 RUN go build -o main .
 
-# Move to /dist directory as the place for resulting binary folder
-WORKDIR /dist
-
-# Copy binary from build to main folder
-RUN cp /build/main .
-
 ############################
 # STEP 2 build a small image
 ############################
-FROM scratch
+FROM busybox
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=builder /dist/main /
+COPY --from=builder /build/main /
 
 EXPOSE 8080
 
