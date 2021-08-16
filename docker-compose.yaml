@@ -9,7 +9,6 @@ networks:
     attachable: true
 
 services:
-
   gateway:
     image: traefik:latest
     command:
@@ -32,53 +31,63 @@ services:
     - traefik.http.middlewares.strip.stripprefixregex.regex=/[a-z0-9-]+
 
   api:
-    image: donnieashok/4ops
     build:
-      context: ./
-      dockerfile: Dockerfile
+      context: api/
+      dockerfile: ../Dockerfile.dev
+    command: goreload .
     networks:
     - default
     ports:
     - 8080/tcp
     labels:
       traefik.enable: "true"
+    volumes:
+      - ./api:/build
   
   addition:
-    image: donnieashok/addition
     build:
       context: addition/
-      dockerfile: ../Dockerfile
+      dockerfile: ../Dockerfile.dev
+    command: goreload .
     networks:
     - default
     ports:
     - 8081:8080/tcp
+    volumes:
+      - ./addition:/build
 
   subtraction:
-    image: donnieashok/subtraction
     build:
       context: subtraction/
-      dockerfile: ../Dockerfile
+      dockerfile: ../Dockerfile.dev
+    command: goreload .
     networks:
     - default
     ports:
     - 8082:8080/tcp
+    volumes:
+      - ./subtraction:/build
 
   multiplication:
-    image: donnieashok/multiplication
     build:
       context: multiplication/
-      dockerfile: ../Dockerfile
+      dockerfile: ../Dockerfile.dev
+    command: goreload .
     networks:
     - default
     ports:
     - 8083:8080/tcp
+    volumes:
+      - ./multiplication:/build
 
   division:
-    image: donnieashok/division
     build:
       context: division/
-      dockerfile: ../Dockerfile
+      dockerfile: ../Dockerfile.dev
+    command: goreload .
     networks:
     - default
     ports:
     - 8084:8080/tcp
+    volumes:
+      - ./division:/build
