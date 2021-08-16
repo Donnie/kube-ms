@@ -21,59 +21,61 @@ func main() {
 
 func handleCalc(c *gin.Context) {
 	amount := 0.0
-	add := c.QueryArray("add")
-	subtract := c.QueryArray("subtract")
-	multiply := c.QueryArray("multiply")
-	divide := c.QueryArray("divide")
 
-	addAmount := getAdd(add)
-	subtractAmount := getSubtract(subtract)
-	multiplyAmount := getMultiply(multiply)
-	divideAmount := getDivide(divide)
+	calcHandler := make(map[string]func(prev *float64, add []string))
+	calcHandler["add"] = getAdd
+	calcHandler["subtract"] = getSubtract
+	calcHandler["multiply"] = getMultiply
+	calcHandler["divide"] = getDivide
 
-	amount += addAmount
-	amount += subtractAmount
-	amount *= multiplyAmount
-	amount *= divideAmount
+	queries := c.Request.URL.Query()
+	for param, values := range queries {
+		calcHandler[param](&amount, values)
+	}
+
 	c.JSON(200, amount)
 }
 
-func getAdd(add []string) float64 {
-	req, _ := http.NewRequest("GET", "http://addition:8080/add", nil)
-	return doHTTP(req, add, "add")
+func getAdd(prev *float64, add []string) {
+	url := "http://addition:8080/calculate"
+	*prev = *prev + parseFloat(doHTTP(url, add))
 }
 
-func getSubtract(add []string) float64 {
-	req, _ := http.NewRequest("GET", "http://subtraction:8080/subtract", nil)
-	return doHTTP(req, add, "subtract")
+func getSubtract(prev *float64, add []string) {
+	url := "http://subtraction:8080/calculate"
+	*prev = *prev + parseFloat(doHTTP(url, add))
 }
 
-func getMultiply(add []string) float64 {
-	req, _ := http.NewRequest("GET", "http://multiplication:8080/multiply", nil)
-	return doHTTP(req, add, "multiply")
+func getMultiply(prev *float64, add []string) {
+	url := "http://multiplication:8080/calculate"
+	*prev = *prev * parseFloat(doHTTP(url, add))
 }
 
-func getDivide(add []string) float64 {
-	req, _ := http.NewRequest("GET", "http://division:8080/divide", nil)
-	return doHTTP(req, add, "divide")
+func getDivide(prev *float64, add []string) {
+	url := "http://division:8080/calculate"
+	*prev = *prev * parseFloat(doHTTP(url, add))
 }
 
-func doHTTP(req *http.Request, arr []string, qu string) float64 {
+func parseFloat(input string) (output float64) {
+	if flt, err := strconv.ParseFloat(input, 64); err == nil {
+		output = flt
+	}
+	return
+}
+
+func doHTTP(url string, arr []string) string {
+	req, _ := http.NewRequest("GET", url, nil)
 	q := req.URL.Query()
 	for _, ad := range arr {
-		q.Add(qu, ad)
+		q.Add("val", ad)
 	}
 	req.URL.RawQuery = q.Encode()
 
 	res, err := http.Get(req.URL.String())
 	if err != nil {
-		return 0
+		return ""
 	}
 	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
-	text := string(body)
-	if flt, err := strconv.ParseFloat(text, 64); err == nil {
-		return flt
-	}
-	return 0.0
+	return string(body)
 }

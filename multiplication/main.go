@@ -9,7 +9,7 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.GET("/multiply", handleMul)
+	r.GET("/calculate", handleMul)
 	r.GET("/health", func(c *gin.Context) {
 		host, _ := os.Hostname()
 		c.JSON(200, host)
@@ -18,7 +18,7 @@ func main() {
 }
 
 func handleMul(c *gin.Context) {
-	if multiply, ok := c.GetQueryArray("multiply"); ok {
+	if multiply, ok := c.GetQueryArray("val"); ok {
 		c.JSON(200, Multiply(multiply))
 	}
 }

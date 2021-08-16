@@ -9,7 +9,7 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.GET("/subtract", handleSub)
+	r.GET("/calculate", handleSub)
 	r.GET("/health", func(c *gin.Context) {
 		host, _ := os.Hostname()
 		c.JSON(200, host)
@@ -18,7 +18,7 @@ func main() {
 }
 
 func handleSub(c *gin.Context) {
-	if subtract, ok := c.GetQueryArray("subtract"); ok {
+	if subtract, ok := c.GetQueryArray("val"); ok {
 		c.JSON(200, Subtract(subtract))
 	}
 }
