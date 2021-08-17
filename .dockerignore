@@ -5,4 +5,5 @@ subtraction
 .git
 docker-compose.yml
 Dockerfile
+Dockerfile.dev
 */.goreload
