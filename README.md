@@ -32,3 +32,13 @@ GET http://localhost:8080/calculate?add=400&add=200&subtract=450&multiply=7&mult
 ```
 
 Clean up with `make clean`
+
+# Tools
+## Kompose
+To convert docker-compose to k8s yaml.
+
+```
+curl -L https://github.com/kubernetes/kompose/releases/download/v1.22.0/kompose-linux-amd64 -o kompose
+chmod +x kompose
+sudo mv ./kompose /usr/local/bin/kompose
+```

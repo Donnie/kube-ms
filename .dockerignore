@@ -3,7 +3,7 @@ division
 multiplication
 subtraction
 .git
-docker-compose.yml
+*.yaml
 Dockerfile
 Dockerfile.dev
 */.goreload
