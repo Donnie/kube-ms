@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2022-07-30T17:02:07Z"
+  labels:
+    app: multiplication
+  name: multiplication
+  namespace: default
+  resourceVersion: "4405"
+  uid: c06147bb-4480-42e9-a7b7-07cc7a2358cd
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 10.107.41.45
+  clusterIPs:
+  - 10.107.41.45
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 30771
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: multiplication
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}

@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2022-07-30T17:02:07Z"
+  labels:
+    app: subtraction
+  name: subtraction
+  namespace: default
+  resourceVersion: "4410"
+  uid: 35686059-ba0a-45f9-bfcc-d1b67f38ce7d
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 10.102.141.19
+  clusterIPs:
+  - 10.102.141.19
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 31711
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: subtraction
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
