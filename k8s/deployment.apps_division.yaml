@@ -1,20 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2022-07-30T16:08:04Z"
-  generation: 1
   labels:
     app: division
   name: division
-  namespace: default
-  resourceVersion: "1836"
-  uid: 5f3bfff4-5fad-4262-9603-12d23008ac46
+  namespace: calculator
 spec:
-  progressDeadlineSeconds: 600
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: division
@@ -25,38 +17,19 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: division
     spec:
       containers:
       - image: donnieashok/division:prod
-        imagePullPolicy: IfNotPresent
         name: division
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
+        resources: 
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
       dnsPolicy: ClusterFirst
       restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
       terminationGracePeriodSeconds: 30
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2022-07-30T16:08:14Z"
-    lastUpdateTime: "2022-07-30T16:08:14Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2022-07-30T16:08:04Z"
-    lastUpdateTime: "2022-07-30T16:08:14Z"
-    message: ReplicaSet "division-7d7d66588" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 1
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1

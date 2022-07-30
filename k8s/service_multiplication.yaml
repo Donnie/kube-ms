@@ -1,13 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: "2022-07-30T17:02:07Z"
   labels:
     app: multiplication
   name: multiplication
-  namespace: default
-  resourceVersion: "4405"
-  uid: c06147bb-4480-42e9-a7b7-07cc7a2358cd
+  namespace: calculator
 spec:
   allocateLoadBalancerNodePorts: true
   clusterIP: 10.107.41.45
@@ -27,5 +24,3 @@ spec:
     app: multiplication
   sessionAffinity: None
   type: LoadBalancer
-status:
-  loadBalancer: {}

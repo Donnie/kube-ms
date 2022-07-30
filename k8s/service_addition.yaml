@@ -1,13 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: "2022-07-30T17:02:06Z"
   labels:
     app: addition
   name: addition
-  namespace: default
-  resourceVersion: "4389"
-  uid: ffc6d11f-b985-4dfc-b54d-924109def8e8
+  namespace: calculator
 spec:
   allocateLoadBalancerNodePorts: true
   clusterIP: 10.101.135.128
@@ -27,5 +24,3 @@ spec:
     app: addition
   sessionAffinity: None
   type: LoadBalancer
-status:
-  loadBalancer: {}

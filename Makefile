@@ -30,10 +30,12 @@ kube-manual:
 staging:
 	minikube start
 	kubectl apply -f k8s
+	minikube service api -n calculator
 
 clean:
 	@echo "Cleaning Docker environment..."
 	docker-compose stop
 	docker-compose down -v
+	kubectl delete all --all -n calculator
 	minikube stop
 	minikube delete --all
