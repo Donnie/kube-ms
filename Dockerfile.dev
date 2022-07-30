@@ -8,7 +8,7 @@ ENV GO111MODULE=on \
     GOARCH=amd64 \
     GIN_MODE=release
 
-RUN go get -u github.com/acoshift/goreload
+RUN go install github.com/acoshift/goreload@latest
 
 # Move to working directory /build
 WORKDIR /build
