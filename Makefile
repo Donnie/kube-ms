@@ -27,15 +27,15 @@ kube-manual:
 	kubectl expose deployment subtraction --type=LoadBalancer --port=8080
 	minikube service api
 
-staging:
+staging: release
 	minikube start
-	kubectl apply -f k8s
+	helm install calculator ./helm
 	minikube service api -n calculator
 
 clean:
-	@echo "Cleaning Docker environment..."
+	@echo "Cleaning environment..."
 	docker-compose stop
 	docker-compose down -v
-	kubectl delete all --all -n calculator
+	helm uninstall calculator
 	minikube stop
 	minikube delete --all

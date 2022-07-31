@@ -1,15 +1,19 @@
+{{- range $k, $v := .Values.applications }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "calculator.fullname" . }}
   labels:
-    {{- include "calculator.labels" . | nindent 4 }}
+    app: {{ $v.name }}
+  name: {{ $v.name }}
+  namespace: calculator
 spec:
-  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - nodePort: {{ $v.nodePort }}
+      port: 8080
       protocol: TCP
-      name: http
+      targetPort: 8080
   selector:
-    {{- include "calculator.selectorLabels" . | nindent 4 }}
+    app: {{ $v.name }}
+  type: LoadBalancer
+---
+{{- end }}
