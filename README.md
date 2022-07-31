@@ -1,11 +1,11 @@
-# Microservice example
+# Helm + Kubernetes (Minikube) + Golang + Microservice example
 In this project I set up four microservices and one API endpoint to calculate numbers.
 
-The project uses docker-compose in development mode with hot reload.
+The project uses `docker-compose` in development mode with hot reload.
 
-The plan is to use kubernetes for production environment, with a single deploy command.
+And it uses K8s with Helm for staging environment, with a single deploy command.
 
-## Structure
+## Application Layer
 
 ```
 api ->  addition
@@ -17,28 +17,62 @@ api ->  addition
 The api has an endpoint `calculate` which accepts query params like so:
 
 ```
-http://localhost:8080/calculate?add=400&add=200&subtract=450&multiply=7&multiply=10&divide=5&divide=2
+/calculate?=&add=2400&add=200&subtract=450&multiply=7&multiply=10&divide=5
 ```
 
 On sending a `GET` request in this format, it relays the respective calculation to the concerned microservice and responds with the calculated amount by reading the responses internally.
 
-## Development Setup
-Do `make dev` to start development environment
+## Infra Layer
+
+### Development Setup
+Just do `make dev` to start development environment
 
 Then send a request like so. 
 
 ```
-GET http://localhost:8080/calculate?add=400&add=200&subtract=450&multiply=7&multiply=10&divide=5&divide=2
+curl --request GET \
+  --url 'http://localhost:8080/calculate?=&add=2400&add=200&subtract=450&multiply=7&multiply=10&divide=5'
 ```
 
 Clean up with `make clean`
 
-# Tools
-## Kompose
-To convert docker-compose to k8s yaml.
+### Staging Setup
+Just do `make staging` to start staging environment with production build
+
+Check if all pods are running:
+```
+kubectl get po -n calculator
+```
+
+Get the local IP Address from Minikube:
+```
+minikube service list
+|-------------|----------------|--------------|---------------------------|
+|  NAMESPACE  |      NAME      | TARGET PORT  |            URL            |
+|-------------|----------------|--------------|---------------------------|
+| calculator  | addition       |         8080 | http://<your-ip>:30010 |
+| calculator  | api            |         8080 | http://<your-ip>:30020 |
+| calculator  | division       |         8080 | http://<your-ip>:30030 |
+| calculator  | multiplication |         8080 | http://<your-ip>:30040 |
+| calculator  | subtraction    |         8080 | http://<your-ip>:30050 |
+| default     | kubernetes     | No node port |
+| kube-system | kube-dns       | No node port |
+|-------------|----------------|--------------|---------------------------|
 
 ```
-curl -L https://github.com/kubernetes/kompose/releases/download/v1.22.0/kompose-linux-amd64 -o kompose
-chmod +x kompose
-sudo mv ./kompose /usr/local/bin/kompose
+
+Then send a request like so to `api` microservice
+
 ```
+curl --request GET \
+  --url 'http://<your-ip>:30020/calculate?=&add=2400&add=200&subtract=450&multiply=7&multiply=10&divide=5'
+```
+
+Clean up with `make stop`
+
+## Requirements
+1. docker
+2. docker-compose
+3. minikube
+4. kubectl
+5. helm

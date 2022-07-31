@@ -2,6 +2,11 @@ dev:
 	docker-compose build
 	docker-compose up
 
+clean:
+	@echo "Cleaning environment..."
+	docker-compose stop
+	docker-compose down -v
+
 release:
 	docker build -t donnieashok/api:prod ./api -f ./Dockerfile
 	docker build -t donnieashok/addition:prod ./addition -f ./Dockerfile
@@ -14,28 +19,13 @@ release:
 	docker push donnieashok/multiplication:prod
 	docker push donnieashok/subtraction:prod
 
-kube-manual:
-	kubectl create deployment addition --image=donnieashok/addition:prod
-	kubectl create deployment api --image=donnieashok/api:prod
-	kubectl create deployment division --image=donnieashok/division:prod
-	kubectl create deployment multiplication --image=donnieashok/multiplication:prod
-	kubectl create deployment subtraction --image=donnieashok/subtraction:prod
-	kubectl expose deployment addition --type=LoadBalancer --port=8080
-	kubectl expose deployment api --type=LoadBalancer --port=8080
-	kubectl expose deployment division --type=LoadBalancer --port=8080
-	kubectl expose deployment multiplication --type=LoadBalancer --port=8080
-	kubectl expose deployment subtraction --type=LoadBalancer --port=8080
-	minikube service api
-
-staging: release
+staging:
 	minikube start
 	helm install calculator ./helm
 	minikube service api -n calculator
 
-clean:
+stop:
 	@echo "Cleaning environment..."
-	docker-compose stop
-	docker-compose down -v
 	helm uninstall calculator
 	minikube stop
 	minikube delete --all
